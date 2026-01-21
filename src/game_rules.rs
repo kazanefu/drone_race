@@ -4,7 +4,6 @@ use bevy::prelude::*;
 pub enum GameState {
     #[default]
     Home,
-    Countdown,
     PlayScene,
     Result,
 }
