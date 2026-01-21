@@ -6,14 +6,9 @@ pub struct HomeSetPlugin;
 impl Plugin for HomeSetPlugin {
     fn build(&self, app: &mut App) {
         app.add_plugins(HomeUIPlugin)
-            .add_systems(OnEnter(GameState::Home), (setup_camera, setup_scene))
-            .add_systems(OnExit(GameState::Home), despawn_all_home_entities);
+            .add_systems(OnEnter(GameState::Home), (setup_camera, setup_scene));
     }
 }
-
-// homeにあるもののマーカー
-#[derive(Component)]
-pub struct HomeMarker;
 
 // homeにおけるカメラのマーカー
 #[derive(Component)]
@@ -25,17 +20,7 @@ fn setup_camera(mut commands: Commands) {
         Camera3d::default(),
         Transform::from_xyz(0.0, 10.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
         HomeCamera,
-        HomeMarker,
-    ));
-    commands.spawn((
-        Camera2d::default(),
-        Camera {
-            order: 1,
-            ..default()
-        },
-        HomeCamera,
-        HomeMarker,
-        Transform::from_xyz(0.0, 0.0, 0.0),
+        //DespawnOnExit(GameState::Home),
     ));
 }
 
@@ -46,9 +31,9 @@ fn setup_scene(
 ) {
     // Ground
     commands.spawn((
+        DespawnOnExit(GameState::Home),
         Mesh3d(meshes.add(Plane3d::default().mesh().size(50.0, 50.0))),
-        MeshMaterial3d(materials.add(Color::srgb(0.3, 0.5, 0.3))),
-        HomeMarker,
+        MeshMaterial3d(materials.add(Color::srgb(0.3, 0.3, 0.3))),
     ));
 
     // Light
@@ -58,12 +43,6 @@ fn setup_scene(
             ..default()
         },
         Transform::from_xyz(4.0, 8.0, 4.0),
-        HomeMarker,
+        DespawnOnExit(GameState::Home),
     ));
-}
-
-fn despawn_all_home_entities(mut commands: Commands, home_marker: Query<Entity, With<HomeMarker>>) {
-    for entity in home_marker.iter() {
-        commands.entity(entity).despawn();
-    }
 }

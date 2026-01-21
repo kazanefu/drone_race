@@ -18,7 +18,6 @@ impl Plugin for PlaySceneSetupPlugin {
     fn build(&self, app: &mut App) {
         app.init_state::<OnPlay>()
             .add_plugins(system::TimerPlugin)
-            .add_systems(Startup, setup_scene)
             .add_systems(
                 Update,
                 (
@@ -60,6 +59,7 @@ fn setup_scene(
 }
 
 fn setup_drone(mut commands: Commands, pc_status: Res<crate::pc_status::PcStatus>) {
+    println!("pc_status: {:?}", pc_status);
     // Player Drone
     drone::spawn_drone_with_pc_status(&mut commands, pc_status);
     // Main Camera

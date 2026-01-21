@@ -1,7 +1,7 @@
 use bevy::prelude::*;
 use sysinfo::{CpuRefreshKind, MemoryRefreshKind, System};
 
-#[derive(Resource, Default)]
+#[derive(Resource, Default, Debug)]
 pub struct PcStatus {
     pub memory_usage_rate: f64,
     pub cpu_clock: f64,
