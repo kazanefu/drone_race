@@ -59,9 +59,9 @@ fn setup_scene(
     ));
 }
 
-fn setup_drone(mut commands: Commands) {
+fn setup_drone(mut commands: Commands, pc_status: Res<crate::pc_status::PcStatus>) {
     // Player Drone
-    drone::spawn_drone(&mut commands);
+    drone::spawn_drone_with_pc_status(&mut commands, pc_status);
     // Main Camera
     main_camera::setup_main_camera(&mut commands);
 }

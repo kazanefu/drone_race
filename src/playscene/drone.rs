@@ -45,8 +45,10 @@ pub struct Drag(pub Vec3);
 #[derive(Component, Debug, Default)]
 pub struct DroneStatus {
     pub mass: f64,
+    pub battery_capacity: f64,
     pub battery: f64,
     pub throttle: f64,
+    pub max_throttle: f64,
     pub throttle_change_rate: f64,
     pub battery_consumption_rate: f64,
     pub is_boost: bool,
@@ -84,6 +86,28 @@ pub struct DroneBundle {
     pub with_main_camera: WithMainCamera,
 }
 
-pub fn spawn_drone(commands: &mut Commands) {
+pub fn _spawn_drone_default(commands: &mut Commands) {
     commands.spawn(DroneBundle::default());
+}
+pub fn spawn_drone_with_pc_status(
+    commands: &mut Commands,
+    pc_status: Res<crate::pc_status::PcStatus>,
+) {
+    commands.spawn(DroneBundle {
+        status: DroneStatus {
+            mass: 1.0 + pc_status.memory_usage_rate,
+            battery_capacity: 100.0 * (1.0 - pc_status.memory_usage_rate),
+            battery: 100.0 * (1.0 - pc_status.memory_usage_rate),
+            max_throttle: 100.0 * (pc_status.cpu_clock + pc_status.gpu_clock) / 2.0,
+            throttle: 0.0,
+            throttle_change_rate: 100.0,
+            battery_consumption_rate: (pc_status.cpu_clock + pc_status.gpu_clock) / 2.0,
+            is_boost: false,
+            is_crash: false,
+            roll_speed: 1.0,
+            pitch_speed: 1.0,
+            yaw_speed: 1.0,
+        },
+        ..Default::default()
+    });
 }

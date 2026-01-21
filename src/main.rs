@@ -16,14 +16,24 @@ fn main() {
         .add_plugins(InputPlugin)
         .add_plugins(playscene::playscene_setup::PlaySceneSetupPlugin)
         .add_systems(Startup, (setup_camera, setup_scene))
+        .add_systems(OnExit(GameState::Home), despawn_camera)
         .run();
 }
 
+#[derive(Component)]
+pub struct HomeCamera;
+
+// homeにおけるカメラスポーン
 fn setup_camera(mut commands: Commands) {
     commands.spawn((
         Camera3d::default(),
         Transform::from_xyz(0.0, 10.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
     ));
+}
+
+// homeのカメラをデスポーン
+fn despawn_camera(mut commands: Commands, camera: Query<Entity, With<HomeCamera>>) {
+    commands.entity(camera.iter().next().unwrap()).despawn();
 }
 
 fn setup_scene(

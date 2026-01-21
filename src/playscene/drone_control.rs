@@ -66,5 +66,7 @@ impl DroneControl {
 impl DroneStatus {
     fn throttle_change(&mut self, mouse_wheel_event: &MouseWheel) {
         self.throttle += mouse_wheel_event.y as f64 * self.throttle_change_rate;
+        self.throttle = self.throttle.min(self.max_throttle);
+        self.throttle = self.throttle.max(-self.max_throttle);
     }
 }

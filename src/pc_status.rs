@@ -13,8 +13,10 @@ pub struct PcStatusPlugin;
 
 impl Plugin for PcStatusPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(PcStatus::default())
-            .add_systems(Update, update_pc_status);
+        app.insert_resource(PcStatus::default()).add_systems(
+            Update,
+            update_pc_status.run_if(in_state(crate::game_rules::GameState::CalculatePC)),
+        );
     }
 }
 
