@@ -1,11 +1,12 @@
-use crate::GameState;
+use crate::{GameState, home_ui::HomeUIPlugin};
 use bevy::prelude::*;
 
 pub struct HomeSetPlugin;
 
 impl Plugin for HomeSetPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameState::Home), (setup_camera, setup_scene))
+        app.add_plugins(HomeUIPlugin)
+            .add_systems(OnEnter(GameState::Home), (setup_camera, setup_scene))
             .add_systems(OnExit(GameState::Home), despawn_all_home_entities);
     }
 }
@@ -14,6 +15,7 @@ impl Plugin for HomeSetPlugin {
 #[derive(Component)]
 pub struct HomeMarker;
 
+// homeにおけるカメラのマーカー
 #[derive(Component)]
 pub struct HomeCamera;
 
@@ -22,7 +24,18 @@ fn setup_camera(mut commands: Commands) {
     commands.spawn((
         Camera3d::default(),
         Transform::from_xyz(0.0, 10.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
+        HomeCamera,
         HomeMarker,
+    ));
+    commands.spawn((
+        Camera2d::default(),
+        Camera {
+            order: 1,
+            ..default()
+        },
+        HomeCamera,
+        HomeMarker,
+        Transform::from_xyz(0.0, 0.0, 0.0),
     ));
 }
 
