@@ -1,7 +1,19 @@
 use bevy::prelude::*;
+// まだbevy0.18に対応するrapier3dがリリースされてないので、いったんコメントアウト
+// use bevy_rapier3d::prelude::*;
 
 #[derive(Component, Debug, Default)]
 pub struct Drone;
+
+// まだbevy0.18に対応するrapier3dがリリースされてないので、いったんコメントアウト
+// 対応版が出たらrapier3dを使う
+// #[derive(Bundle)]
+// pub struct DronePhysicsBundle {
+//     pub rigid_body: RigidBody,
+//     pub velocity: Velocity,
+//     pub collider: Collider,
+//     pub damping: Damping,
+// }
 
 #[derive(Component, Debug, Default)]
 pub struct Velocity(pub Vec3);
