@@ -13,14 +13,23 @@ pub struct PcStatusPlugin;
 
 impl Plugin for PcStatusPlugin {
     fn build(&self, app: &mut App) {
-        app.insert_resource(PcStatus::default()).add_systems(
-            Update,
-            update_pc_status.run_if(in_state(crate::game_rules::GameState::CalculatePC)),
-        );
+        app.insert_resource(PcStatus::default())
+            .add_plugins(super::cal_button::CalButtonPlugin)
+            .add_systems(
+                Update,
+                update_pc_status.run_if(in_state(crate::game_rules::GameState::CalculatePC)),
+            );
     }
 }
 
-fn update_pc_status(mut pc_status: ResMut<PcStatus>) {
+fn update_pc_status(
+    mut pc_status: ResMut<PcStatus>,
+    cal_pc_status_event: MessageReader<super::cal_button::CalPcStatusMessage>,
+) {
+    if cal_pc_status_event.is_empty() {
+        return;
+    }
+
     pc_status.system.refresh_memory();
     pc_status.system.refresh_cpu_all();
 

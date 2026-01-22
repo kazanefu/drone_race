@@ -29,6 +29,7 @@ pub struct CameraOffset(pub Vec3);
 
 impl Default for CameraOffset {
     fn default() -> Self {
+        // position offset
         Self(Vec3::new(0.0, 0.0, 0.5))
     }
 }
@@ -38,7 +39,9 @@ pub struct CameraRotation(pub Quat);
 
 impl Default for CameraRotation {
     fn default() -> Self {
-        Self(Quat::from_rotation_x(-15_f32.to_radians()))
+        // rotation offset from x axis
+        let offset = -15_f32.to_radians();
+        Self(Quat::from_rotation_x(offset))
     }
 }
 
