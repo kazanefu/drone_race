@@ -1,4 +1,4 @@
-use crate::{GameState, home_ui::HomeUIPlugin};
+use crate::{GameState, home::home_ui::HomeUIPlugin};
 use bevy::prelude::*;
 
 pub struct HomeSetPlugin;

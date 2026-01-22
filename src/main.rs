@@ -1,6 +1,5 @@
 mod game_rules;
-mod home_set;
-mod home_ui;
+mod home;
 mod input;
 mod pc_status;
 mod playscene;
@@ -8,7 +7,7 @@ mod playscene;
 use bevy::prelude::*;
 use game_rules::{GameRulesPlugin, GameState};
 use input::InputPlugin;
-use pc_status::PcStatusPlugin;
+use pc_status::pc_status::PcStatusPlugin;
 
 fn main() {
     App::new()
@@ -17,6 +16,6 @@ fn main() {
         .add_plugins(GameRulesPlugin) // game state management
         .add_plugins(InputPlugin)
         .add_plugins(playscene::playscene_setup::PlaySceneSetupPlugin) // play scene management
-        .add_plugins(home_set::HomeSetPlugin) // home scene setup
+        .add_plugins(home::home_set::HomeSetPlugin) // home scene setup
         .run();
 }

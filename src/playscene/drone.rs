@@ -103,7 +103,7 @@ pub fn _spawn_drone_default(commands: &mut Commands) {
 }
 pub fn spawn_drone_with_pc_status(
     commands: &mut Commands,
-    pc_status: Res<crate::pc_status::PcStatus>,
+    pc_status: Res<crate::pc_status::pc_status::PcStatus>,
 ) {
     commands.spawn(DroneBundle {
         status: DroneStatus {
