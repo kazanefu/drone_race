@@ -62,7 +62,7 @@ fn go_play_scene_button(asset_server: Res<AssetServer>) -> impl Bundle {
                 },
                 TextLayout::new_with_justify(Justify::Center),
             ),],
-        )],
+        ),],
     )
 }
 
