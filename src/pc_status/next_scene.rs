@@ -1,6 +1,7 @@
 use crate::GameState;
 use bevy::prelude::*;
 
+/// Plugin for the button that transitions to the Play scene from the calculation screen.
 pub struct GoPlaySceneUIPlugin;
 
 impl Plugin for GoPlaySceneUIPlugin {
@@ -13,6 +14,7 @@ impl Plugin for GoPlaySceneUIPlugin {
     }
 }
 
+/// Marker component for the "Go to Play Scene" button.
 #[derive(Component)]
 pub struct GoPlaySceneButton;
 

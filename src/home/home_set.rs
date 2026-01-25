@@ -1,6 +1,7 @@
 use crate::{GameState, home::home_ui::HomeUIPlugin};
 use bevy::prelude::*;
 
+/// Plugin for setting up the "Home" scene assets and camera.
 pub struct HomeSetPlugin;
 
 impl Plugin for HomeSetPlugin {
@@ -10,11 +11,11 @@ impl Plugin for HomeSetPlugin {
     }
 }
 
-// homeにおけるカメラのマーカー
+/// Marker component for the camera used in the "Home" state.
 #[derive(Component)]
 pub struct HomeCamera;
 
-// homeにおけるカメラスポーン
+/// Spawns the 3D camera for the home scene.
 fn setup_camera(mut commands: Commands) {
     commands.spawn((
         Camera3d::default(),

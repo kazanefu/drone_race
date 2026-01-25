@@ -2,11 +2,12 @@ use bevy::prelude::*;
 // まだbevy0.18に対応するrapier3dがリリースされてないので、いったんコメントアウト
 // use bevy_rapier3d::prelude::*;
 
+/// Marker component for the drone entity.
 #[derive(Component, Debug, Default)]
 pub struct Drone;
 
-// まだbevy0.18に対応するrapier3dがリリースされてないので、いったんコメントアウト
-// 対応版が出たらrapier3dを使う
+// TODO: Commented out as bevy_rapier3d for bevy 0.18 is not yet released.
+// Use rapier3d once the compatible version is available.
 // #[derive(Bundle)]
 // pub struct DronePhysicsBundle {
 //     pub rigid_body: RigidBody,
@@ -30,6 +31,7 @@ pub struct CameraOffset(pub Vec3);
 impl Default for CameraOffset {
     fn default() -> Self {
         // position offset
+        // Reset or update based on input
         Self(Vec3::new(0.0, 0.0, 0.5))
     }
 }
@@ -45,6 +47,7 @@ impl Default for CameraRotation {
     }
 }
 
+/// Marker component placed on entities (like the Drone) that should be followed by the main camera.
 #[derive(Component, Debug, Default)]
 pub struct WithMainCamera;
 
@@ -60,6 +63,7 @@ pub struct Drag(pub Vec3);
 #[derive(Component, Debug, Default)]
 pub struct DroneStatus {
     pub mass: f64,
+    #[allow(dead_code)]
     pub battery_capacity: f64,
     pub battery: f64,
     pub throttle: f64,
@@ -80,6 +84,7 @@ pub struct DroneControl {
     pub yaw: f64,
     pub throttle: f64,
     pub boost: bool,
+    #[allow(dead_code)]
     pub crash: bool,
 }
 

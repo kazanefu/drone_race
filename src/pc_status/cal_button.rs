@@ -1,6 +1,7 @@
 use crate::GameState;
 use bevy::prelude::*;
 
+/// Plugin for the "Calculate PC" button UI.
 pub struct CalButtonPlugin;
 
 impl Plugin for CalButtonPlugin {
@@ -14,9 +15,11 @@ impl Plugin for CalButtonPlugin {
     }
 }
 
+/// Message sent when the "Calculate" button is pressed.
 #[derive(Message)]
 pub struct CalPcStatusMessage;
 
+/// Marker component for the "Calculate" button.
 #[derive(Component)]
 pub struct CalButton;
 

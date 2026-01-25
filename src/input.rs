@@ -9,11 +9,12 @@ impl Plugin for InputPlugin {
     }
 }
 
-fn handle_drone_input(
+/// Map keyboard inputs to drone control commands.
+pub fn handle_drone_input(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     mut query: Query<&mut DroneControl>,
 ) {
-    for mut control in query.iter_mut() {
+    for _control in query.iter_mut() {
         // Reset or update based on input
         if keyboard_input.pressed(KeyCode::KeyW) { /* Up logic */ }
         if keyboard_input.pressed(KeyCode::KeyS) { /* Down logic */ }

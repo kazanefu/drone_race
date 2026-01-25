@@ -23,6 +23,8 @@ pub fn reset_race_timer(mut timer: ResMut<RaceTimer>) {
 }
 
 impl RaceTimer {
+    /// Returns the elapsed race time in seconds.
+    #[allow(dead_code)]
     pub fn get_race_time(&self) -> f64 {
         self.0.elapsed_secs() as f64
     }

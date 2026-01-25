@@ -1,18 +1,25 @@
 use crate::game_rules::GameState;
 use bevy::prelude::*;
-use sysinfo::{CpuRefreshKind, MemoryRefreshKind, System};
+use sysinfo::System;
 
+/// Resource containing the real-time PC hardware status.
 #[derive(Resource, Default, Debug)]
 pub struct PcStatus {
+    /// Percentage of memory used (0.0 to 1.0).
     pub memory_usage_rate: f64,
+    /// Average CPU clock frequency in MHz.
     pub cpu_clock: f64,
+    /// Estimated GPU clock frequency (currently a placeholder).
     pub gpu_clock: f64,
+    /// Internal system handle for hardware metrics.
     pub system: System,
 }
 
+/// Marker component for the camera used during PC status calculation.
 #[derive(Component)]
 pub struct PCStatusCamera;
 
+/// Plugin for managing the "Calculate PC" state and hardware monitoring.
 pub struct PcStatusPlugin;
 
 impl Plugin for PcStatusPlugin {

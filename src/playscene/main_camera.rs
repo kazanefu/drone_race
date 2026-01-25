@@ -1,6 +1,7 @@
 use crate::game_rules::GameState;
 use bevy::prelude::*;
 
+/// Marker component for the main camera entity itself in the play scene.
 #[derive(Component, Debug, Default)]
 pub struct MainCamera;
 
