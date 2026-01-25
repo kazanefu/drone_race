@@ -10,9 +10,10 @@ use input::InputPlugin;
 use pc_status::pc_status::PcStatusPlugin;
 
 fn main() {
-    App::new()
-        .add_plugins(DefaultPlugins)
-        .add_plugins(PcStatusPlugin) // pc status management
+    let mut app = App::new();
+    app.add_plugins(DefaultPlugins);
+    bevy::asset::embedded_asset!(app, "fonts/NotoSansJP-Bold.ttf");
+    app.add_plugins(PcStatusPlugin) // pc status management
         .add_plugins(GameRulesPlugin) // game state management
         .add_plugins(InputPlugin)
         .add_plugins(playscene::playscene_setup::PlaySceneSetupPlugin) // play scene management
