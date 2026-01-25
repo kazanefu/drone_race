@@ -1,30 +1,26 @@
 use crate::GameState;
 use bevy::prelude::*;
 
-pub struct CalButtonPlugin;
+pub struct GoPlaySceneUIPlugin;
 
-impl Plugin for CalButtonPlugin {
+impl Plugin for GoPlaySceneUIPlugin {
     fn build(&self, app: &mut App) {
-        app.add_systems(OnEnter(GameState::CalculatePC), setup_cal_button)
-            .add_message::<CalPcStatusMessage>()
+        app.add_systems(OnEnter(GameState::CalculatePC), setup_go_play_scene)
             .add_systems(
                 Update,
-                update_cal_button.run_if(in_state(GameState::CalculatePC)),
+                update_go_play_scene.run_if(in_state(GameState::CalculatePC)),
             );
     }
 }
 
-#[derive(Message)]
-pub struct CalPcStatusMessage;
-
 #[derive(Component)]
-pub struct CalButton;
+pub struct GoPlaySceneButton;
 
-fn setup_cal_button(mut commands: Commands, asset_server: Res<AssetServer>) {
-    commands.spawn(cal_button(asset_server));
+fn setup_go_play_scene(mut commands: Commands, asset_server: Res<AssetServer>) {
+    commands.spawn(go_play_scene_button(asset_server));
 }
 
-fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
+fn go_play_scene_button(asset_server: Res<AssetServer>) -> impl Bundle {
     (
         DespawnOnExit(GameState::CalculatePC),
         Node {
@@ -36,10 +32,12 @@ fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
         },
         children![(
             Button,
-            CalButton,
+            GoPlaySceneButton,
             Node {
                 width: px(150),
                 height: px(65),
+                // Show below the center button
+                margin: UiRect::top(px(100.0)),
                 // horizontally center child text
                 justify_content: JustifyContent::Center,
                 // vertically center child text
@@ -50,7 +48,7 @@ fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
             BorderColor::all(Color::WHITE),
             BackgroundColor(Color::BLACK),
             children![(
-                Text::new("Calculate from PC status"),
+                Text::new("Go to Play Scene"),
                 TextFont {
                     font: asset_server.load("fonts/NotoSansJP-Bold.ttf"),
                     font_size: 20.0,
@@ -62,15 +60,18 @@ fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
     )
 }
 
-fn update_cal_button(
-    mut query: Query<(&Interaction, &mut BackgroundColor), (Changed<Interaction>, With<CalButton>)>,
-    mut cal_pc_status_event: MessageWriter<CalPcStatusMessage>,
+fn update_go_play_scene(
+    mut query: Query<
+        (&Interaction, &mut BackgroundColor),
+        (Changed<Interaction>, With<GoPlaySceneButton>),
+    >,
+    mut game_state: ResMut<NextState<GameState>>,
 ) {
     for (interaction, mut background_color) in query.iter_mut() {
         match interaction {
             Interaction::Pressed => {
                 background_color.0 = Color::srgb(0.5, 0.5, 0.5);
-                cal_pc_status_event.write(CalPcStatusMessage);
+                game_state.set(GameState::PlayScene);
             }
             Interaction::Hovered => {
                 background_color.0 = Color::srgb(0.7, 0.7, 0.7);
@@ -81,4 +82,3 @@ fn update_cal_button(
         }
     }
 }
-
