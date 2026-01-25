@@ -20,7 +20,7 @@ fn setup_camera(mut commands: Commands) {
         Camera3d::default(),
         Transform::from_xyz(0.0, 10.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
         HomeCamera,
-        //DespawnOnExit(GameState::Home),
+        DespawnOnExit(GameState::Home),
     ));
 }
 

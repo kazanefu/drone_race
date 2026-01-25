@@ -1,3 +1,4 @@
+use crate::game_rules::GameState;
 use bevy::prelude::*;
 use sysinfo::{CpuRefreshKind, MemoryRefreshKind, System};
 
@@ -9,17 +10,31 @@ pub struct PcStatus {
     pub system: System,
 }
 
+#[derive(Component)]
+pub struct PCStatusCamera;
+
 pub struct PcStatusPlugin;
 
 impl Plugin for PcStatusPlugin {
     fn build(&self, app: &mut App) {
         app.insert_resource(PcStatus::default())
             .add_plugins(super::cal_button::CalButtonPlugin)
+            .add_plugins(super::next_scene::GoPlaySceneUIPlugin)
+            .add_systems(OnEnter(GameState::CalculatePC), setup_pc_status_camera)
             .add_systems(
                 Update,
                 update_pc_status.run_if(in_state(crate::game_rules::GameState::CalculatePC)),
             );
     }
+}
+
+fn setup_pc_status_camera(mut commands: Commands) {
+    commands.spawn((
+        Camera3d::default(),
+        Transform::from_xyz(0.0, 10.0, 20.0).looking_at(Vec3::ZERO, Vec3::Y),
+        PCStatusCamera,
+        DespawnOnExit(GameState::CalculatePC),
+    ));
 }
 
 fn update_pc_status(
