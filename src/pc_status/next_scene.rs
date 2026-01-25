@@ -50,7 +50,7 @@ fn go_play_scene_button(asset_server: Res<AssetServer>) -> impl Bundle {
             children![(
                 Text::new("Go to Play Scene"),
                 TextFont {
-                    font: asset_server.load("fonts/NotoSansJP-Bold.ttf"),
+                    font: asset_server.load("embedded://drone_race/fonts/NotoSansJP-Bold.ttf"),
                     font_size: 20.0,
                     ..default()
                 },

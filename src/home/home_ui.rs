@@ -17,7 +17,7 @@ fn setup_home_ui(mut commands: Commands, asset_server: Res<AssetServer>) {
     commands.spawn((
         Text::new("Home"),
         TextFont {
-            font: asset_server.load("fonts/NotoSansJP-Bold.ttf"),
+            font: asset_server.load("embedded://drone_race/fonts/NotoSansJP-Bold.ttf"),
             font_size: 40.0,
             ..default()
         },
@@ -56,7 +56,7 @@ fn go_play_scene_button(asset_server: Res<AssetServer>) -> impl Bundle {
             children![(
                 Text::new("Play Scene"),
                 TextFont {
-                    font: asset_server.load("fonts/NotoSansJP-Bold.ttf"),
+                    font: asset_server.load("embedded://drone_race/fonts/NotoSansJP-Bold.ttf"),
                     font_size: 20.0,
                     ..default()
                 },

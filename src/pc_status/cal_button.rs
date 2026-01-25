@@ -52,7 +52,7 @@ fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
             children![(
                 Text::new("Calculate from PC status"),
                 TextFont {
-                    font: asset_server.load("fonts/NotoSansJP-Bold.ttf"),
+                    font: asset_server.load("embedded://drone_race/fonts/NotoSansJP-Bold.ttf"),
                     font_size: 20.0,
                     ..default()
                 },
@@ -81,4 +81,3 @@ fn update_cal_button(
         }
     }
 }
-
