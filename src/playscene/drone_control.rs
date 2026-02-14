@@ -32,7 +32,7 @@ pub fn handle_drone_input(
             control.pitch_logic(&status, mouse_motion_event);
         }
         for mouse_wheel_event in mouse_wheel_events.read() {
-            status.throttle_change(&mouse_wheel_event);
+            status.throttle_change(mouse_wheel_event);
         }
 
         // etc.
@@ -44,7 +44,7 @@ impl DroneControl {
         self.throttle = status.throttle;
     }
     fn down_logic(&mut self, status: &DroneStatus) {
-        self.throttle = status.throttle * -1.0;
+        self.throttle = -status.throttle;
     }
     fn roll_logic(&mut self, status: &DroneStatus, mouse_motion_event: &MouseMotion) {
         self.roll = status.roll_speed * mouse_motion_event.delta.x as f64;
@@ -56,7 +56,7 @@ impl DroneControl {
         self.yaw = status.yaw_speed;
     }
     fn right_yaw_logic(&mut self, status: &DroneStatus) {
-        self.yaw = status.yaw_speed * -1.0;
+        self.yaw = -status.yaw_speed;
     }
     fn boost_logic(&mut self, status: &mut DroneStatus) {
         status.is_boost = true;
