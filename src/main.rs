@@ -7,7 +7,7 @@ mod playscene;
 use bevy::prelude::*;
 use game_rules::{GameRulesPlugin, GameState};
 use input::InputPlugin;
-use pc_status::pc_status::PcStatusPlugin;
+use pc_status::pc_status_def::PcStatusPlugin;
 
 fn main() {
     let mut app = App::new();

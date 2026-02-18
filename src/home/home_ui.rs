@@ -66,10 +66,12 @@ fn go_play_scene_button(asset_server: Res<AssetServer>) -> impl Bundle {
     )
 }
 
+type GoPlaySceneButtonInputs = (Changed<Interaction>, With<GoPlaySceneButton>);
+
 fn update_home_ui(
     mut query: Query<
         (&Interaction, &mut BackgroundColor),
-        (Changed<Interaction>, With<GoPlaySceneButton>),
+        GoPlaySceneButtonInputs,
     >,
     mut game_state: ResMut<NextState<GameState>>,
 ) {

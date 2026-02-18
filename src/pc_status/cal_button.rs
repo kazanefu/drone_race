@@ -65,8 +65,10 @@ fn cal_button(asset_server: Res<AssetServer>) -> impl Bundle {
     )
 }
 
+type CalButtonInputs = (Changed<Interaction>, With<CalButton>);
+
 fn update_cal_button(
-    mut query: Query<(&Interaction, &mut BackgroundColor), (Changed<Interaction>, With<CalButton>)>,
+    mut query: Query<(&Interaction, &mut BackgroundColor), CalButtonInputs>,
     mut cal_pc_status_event: MessageWriter<CalPcStatusMessage>,
 ) {
     for (interaction, mut background_color) in query.iter_mut() {
